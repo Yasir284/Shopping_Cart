@@ -3,16 +3,17 @@ import { ADD_ITEM, REMOVE_ITEM, BUY_ITEM } from "./action.type";
 import { toast } from "react-toastify";
 
 const ItemReducer = (state, action) => {
+  debugger;
   switch (action.type) {
     case ADD_ITEM: {
-      const itemRepeated = state.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (itemRepeated) {
+      let itemRepeated = state.filter((item) => {
+        return item.id === action.payload.id;
+      });
+      console.log(state);
+      console.log(itemRepeated.length);
+      if (itemRepeated.length > 0) {
         return toast("Item is already added", { type: "warning" });
-      } else {
-        return [...state, action.payload];
-      }
+      } else return [...state, action.payload];
     }
 
     case REMOVE_ITEM: {
