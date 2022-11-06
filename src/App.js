@@ -9,9 +9,18 @@ import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { randWord, randAmount, randUuid } from "@ngneat/falso";
+import { Switch, Route, useLocation } from "react-router-dom";
+import {
+  randWord,
+  randAmount,
+  randUuid,
+  randProductDescription,
+  randColor,
+} from "@ngneat/falso";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
+  const location = useLocation();
   const [cartItem, dispatch] = useReducer(ItemReducer, []);
   const localUrl = "http://myjson.dit.upm.es/api/bins/5ce6";
   const [products, setProduct] = useState([]);
@@ -27,6 +36,8 @@ function App() {
         productName: randWord().toUpperCase(),
         productPrice: randAmount(),
         id: randUuid(),
+        productDescription: randProductDescription(),
+        productColor: randColor(),
       };
     });
 
@@ -39,10 +50,18 @@ function App() {
   return (
     <>
       <Navbar />
-      <ToastContainer />
+      <ToastContainer theme="dark" />
       <ItemContext.Provider value={{ cartItem, dispatch, products }}>
-        <BuyPage />
-        <Cart />
+        <AnimatePresence exitBeforeEnter>
+          <Switch location={location} key={location.key}>
+            <Route exact path="/cart">
+              <Cart />
+            </Route>
+            <Route exact path="/">
+              <BuyPage />
+            </Route>
+          </Switch>
+        </AnimatePresence>
       </ItemContext.Provider>
     </>
   );

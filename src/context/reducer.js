@@ -6,14 +6,17 @@ const ItemReducer = (state, action) => {
   debugger;
   switch (action.type) {
     case ADD_ITEM: {
+      console.log("state : ", state);
       let itemRepeated = state.filter((item) => {
-        return item.id === action.payload.id;
+        return item?.id === action?.payload?.id;
       });
-      console.log(state);
-      console.log(itemRepeated.length);
       if (itemRepeated.length > 0) {
-        return toast("Item is already added", { type: "warning" });
-      } else return [...state, action.payload];
+        toast("Item is already added", { type: "warning" });
+        return state;
+      } else {
+        toast("Item added to cart", { type: "success" });
+        return [...state, action.payload];
+      }
     }
 
     case REMOVE_ITEM: {
@@ -22,7 +25,8 @@ const ItemReducer = (state, action) => {
 
     case BUY_ITEM: {
       state = [];
-      return toast("Payment sucessfull", { type: "success" });
+      toast("Payment sucessfull", { type: "success" });
+      return state;
     }
 
     default:
