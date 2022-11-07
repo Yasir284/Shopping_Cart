@@ -33,13 +33,15 @@ const btnVarient = {
     scale: 1,
     backgroundColor: "#a78bfa",
     color: "#111827",
+    border: "2px solid transparent",
   },
   whileHover: {
-    scale: [0.7, 1.7],
+    scale: [1, 1.1],
     backgroundColor: "#111827",
-    color: "#fff",
+    color: "#a78bfa",
+    border: "2px solid #a78bfa",
     transition: {
-      duration: 0.3,
+      duration: 0.4,
       ease: "easeInOut",
       scale: { duration: 0.5, yoyo: Infinity },
     },
@@ -145,17 +147,23 @@ function Cart() {
             className="text-2xl text-violet-400 hover:text-white hover:scale-125 transition-all ease-in-out duration-300"
           />
         </Link>
-        <motion.button
-          {...btnVarient}
-          className="px-6 py-2 border rounded-md bg-violet-400 text-gray-900 border-violet-400 hover:text-white hover:bg-transparent transition-all ease-in-out duration-300 active:scale-50"
-          onClick={() => {
-            dispatch({
-              type: BUY_ITEM,
-            });
-          }}
-        >
-          <span className="sr-only sm:not-sr-only">Buy Products</span>
-        </motion.button>
+        {cartItem.length > 0 ? (
+          <motion.button
+            {...btnVarient}
+            className="px-6 py-2 rounded-md bg-violet-400 text-gray-900 border-violet-400"
+            onClick={() => {
+              dispatch({
+                type: BUY_ITEM,
+              });
+            }}
+          >
+            <span className="sr-only sm:not-sr-only">Buy Products</span>
+          </motion.button>
+        ) : (
+          <button className="px-6 py-2 rounded-md bg-gray-400 text-gray-600">
+            Buy Products
+          </button>
+        )}
       </div>
     </motion.div>
   );
