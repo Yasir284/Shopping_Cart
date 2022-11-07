@@ -22,7 +22,9 @@ import { AnimatePresence } from "framer-motion";
 function App() {
   const location = useLocation();
   const [cartItem, dispatch] = useReducer(ItemReducer, []);
-  const localUrl = "http://myjson.dit.upm.es/api/bins/5ce6";
+  const localUrl = "https://myjson.dit.upm.es/api/bins/ee5y";
+  // const localUrl = "./PACKAGE.json";
+
   const [products, setProduct] = useState([]);
   const [active, setActive] = useState(location.pathname);
 
