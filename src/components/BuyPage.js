@@ -12,7 +12,7 @@ const containerVarient = {
   show: {
     x: 0,
     transition: {
-      delay: 0.4,
+      delay: 0.2,
       type: "spring",
       stiffness: 80,
       mass: 0.6,

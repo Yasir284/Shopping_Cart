@@ -24,6 +24,7 @@ function App() {
   const [cartItem, dispatch] = useReducer(ItemReducer, []);
   const localUrl = "http://myjson.dit.upm.es/api/bins/5ce6";
   const [products, setProduct] = useState([]);
+  const [active, setActive] = useState(location.pathname);
 
   const fetchData = async () => {
     const { data } = await axios.get(localUrl);
@@ -49,16 +50,18 @@ function App() {
   }, []);
   return (
     <>
-      <Navbar />
-      <ToastContainer theme="dark" />
-      <ItemContext.Provider value={{ cartItem, dispatch, products }}>
-        <AnimatePresence exitBeforeEnter>
+      <ItemContext.Provider
+        value={{ cartItem, dispatch, products, active, setActive }}
+      >
+        <Navbar />
+        <ToastContainer position="top-left" theme="dark" autoClose={2000} />
+        <AnimatePresence mode="wait">
           <Switch location={location} key={location.key}>
-            <Route exact path="/cart">
-              <Cart />
-            </Route>
             <Route exact path="/">
               <BuyPage />
+            </Route>
+            <Route exact path="/cart">
+              <Cart />
             </Route>
           </Switch>
         </AnimatePresence>

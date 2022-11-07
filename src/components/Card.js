@@ -3,19 +3,47 @@ import { motion } from "framer-motion";
 const btnVarient = {
   initial: {
     scale: 1,
+    backgroundColor: "#fff",
+    border: "2px solid transparent",
+    color: "#0f172a",
   },
   whileHover: {
-    scale: [0.7, 1.5],
+    scale: 1.2,
+    backgroundColor: "#0f172a",
+    border: "2px solid #fff",
+    color: "#fff",
     transition: {
-      duration: 0.4,
-      yoyo: Infinity,
+      scale: { type: "spring", stiffness: 900 },
+    },
+  },
+  whileTap: {
+    scale: 0.6,
+    transition: {
+      type: "spring",
+      stiffness: 200,
+    },
+  },
+};
+
+const containerVarient = {
+  initial: {
+    scale: 1,
+  },
+  whileHover: {
+    scale: 1.1,
+    transition: {
+      type: "spring",
+      stiffness: 700,
     },
   },
 };
 
 function Card({ img, name, price, addItem, description }) {
   return (
-    <div className="dark:bg-slate-900 rounded-md shadow-xl shadow-[#111111] hover:scale-110 hover:shadow-gray-600 transition-all ease-in-out duration-300 lg:w-1/4 md:w-1/2 p-4 w-full">
+    <motion.div
+      className="bg-slate-900 rounded-md shadow-xl shadow-[#111111] lg:w-1/4 md:w-1/2 p-4 w-full"
+      {...containerVarient}
+    >
       <div className="block relative h-48 rounded overflow-hidden">
         <img
           alt="ecommerce"
@@ -29,15 +57,13 @@ function Card({ img, name, price, addItem, description }) {
       </div>
       <p className="text-gray-400 text-sm text-left h-20 mb-4">{description}</p>
       <motion.button
-        className="px-8 py-3 rounded-3xl text-slate-900 font-bold border-solid border-2 border-transparent transition-all ease-in-out duration-200 bg-white hover:bg-slate-900 hover:text-white hover:border-white active:scale-50"
+        className="px-8 py-3 rounded-3xl text-slate-900 font-bold bg-white"
         onClick={addItem}
-        variants={btnVarient}
-        initial="initial"
-        whileHover="whileHover"
+        {...btnVarient}
       >
         Buy now
       </motion.button>
-    </div>
+    </motion.div>
   );
 }
 
