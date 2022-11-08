@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import Axios from "axios";
 import { Switch, Route, useLocation } from "react-router-dom";
 import {
   randWord,
@@ -22,14 +22,20 @@ import { AnimatePresence } from "framer-motion";
 function App() {
   const location = useLocation();
   const [cartItem, dispatch] = useReducer(ItemReducer, []);
-  const localUrl = "https://myjson.dit.upm.es/api/bins/ee5y";
-  // const localUrl = "./PACKAGE.json";
+  // const localUrl = "https://myjson.dit.upm.es/api/bins/ee5y";
+  const apiKey = "563492ad6f917000010000014d95bc45a7a140b38883a96905e6de6c";
+  const url = "https://api.pexels.com/v1/search?query=shoes&per_page=21&page=1";
 
   const [products, setProduct] = useState([]);
   const [active, setActive] = useState(location.pathname);
 
   const fetchData = async () => {
-    const { data } = await axios.get(localUrl);
+    debugger;
+    const { data } = await Axios.get(url, {
+      headers: {
+        Authorization: apiKey,
+      },
+    });
     const { photos } = data;
 
     const allProducts = photos.map((photo) => {
